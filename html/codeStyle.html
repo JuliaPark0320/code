@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../css/prism.css" rel="stylesheet" />
+    <style>
+        .code{
+            width: 1000px;
+            height: 300px;
+            font-family: Menlo,Monaco,"Courier New",Courier,monospace;
+            font-size: 16px;
+            background: rgba(0,0,0,0.05);
+            color: rgba(0,0,0,0.8);
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+<div>라이브러리 <a href="http://prismjs.com/"> http://prismjs.com/ </a></div>
+<div>1. 복사한 코드의 스타일 유지</div>
+<div>2. 사용자 입력과 실시간 처리 불가</div>
+<p></p>
+<div>ex) IDE에서 코드 복사 + 붙여넣기 후 페이지 클릭</div>
+</div>
+<h2>Theme Demo</h2>
+<div>입력</div>
+<textarea id="codeBlack" class="code">
+</textarea>
+<div>출력</div>
+<div>
+    <pre>
+        <code class="language-javascript">
+        </code>
+    </pre>
+</div>
+
+<script src="../lib/prism.js"></script>
+<script type="text/javascript">
+    var elCodeblack = document.getElementById("codeBlack");
+    var elPreviewArea = document.getElementsByTagName('pre')[0];
+    var getCode = function(){
+        return elCodeblack.value;
+    };
+    var previewCode = function(){
+        elPreviewArea.innerHTML = getCode();
+        Prism.highlightElement(elPreviewArea);;
+    }
+
+    elCodeblack.addEventListener('blur', function(){;
+        elPreviewArea.innerHTML = getCode();
+        Prism.highlightElement(elPreviewArea)
+    });
+</script>
+</body>
+</html>

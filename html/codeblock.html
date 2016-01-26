@@ -1,0 +1,72 @@
+<html><head><title>Code Component 1: Demo</title>
+    <meta charset="utf-8">
+    <style>
+        .code{
+            height: 300px;
+            font-family: Menlo,Monaco,"Courier New",Courier,monospace;
+            font-size: 16px;
+            background: rgba(0,0,0,0.05);
+            color: rgba(0,0,0,0.8);
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .bold{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div>비교대상 <a href="https://medium.com"> https://medium.com </a></div>
+    <div>1. 복사한 코드의 weight, style, font-family, size만 유지</div>
+    <div>2. 사용자가 직접 입력한 코드는 일반 텍스와 같이 처리</div>
+    <h2>Theme Demo</h2>
+    <div class="code" contenteditable>
+        <span>코드입력</span>
+    </div>
+    <div>ex) 아래 기울기와 굵기 스타일을 코드입력란에 복사 + 붙여넣기 후 결과 비교</div>
+    <div>
+        <span style="font-weight: bolder; font-size: 20px;">
+            <span>test</span>
+         </span>
+        <span style="font-weight: bolder; font-size: 24px; font-style: italic;">test</span>
+    </div>
+<script src="http://code.jquery.com/jquery-2.1.0.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $('[contenteditable]').on('paste',function(e) {
+
+            e.preventDefault();
+
+            var text = (e.originalEvent || e).clipboardData.getData('text/html');
+
+            var $result = $('<div></div>').append($(text));
+
+            $(this).html($result.html());
+
+            // replace all styles except bold and italic
+            $.each($(this).find("*"), function(idx, val) {
+                var $item = $(val);
+                if ($item.length > 0){
+                    var saveStyle = {
+                        'font-weight': $item.css('font-weight'),
+                        'font-style': $item.css('font-style'),
+                        'font-family': 'Menlo,Monaco,"Courier New",Courier,monospace',
+                        'font-size': '16px'
+                    };
+                    $item.removeAttr('style').removeClass()
+                            .css(saveStyle);
+                }
+            });
+
+            // remove unnecesary tags (if paste from word)
+            $(this).children('style').remove();
+            $(this).children('meta').remove()
+            $(this).children('link').remove();
+
+        });
+
+    });
+</script>
+</body></html>
